@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Coursework</name>
+	<name>Clothe</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -28,9 +28,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/main/webapp/WEB-INF/lib/jstl-1.2.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/OneDrive/Desktop/jstl-1.2.jar</locationURI>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1680329271331</id>
+			<id>1683462882446</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

@@ -1,35 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="css/loginsignup.css" />
-<title>Login</title>
-<style >
-input[type=text], input[type=password] {
-display: block;} 
-form div {
-	margin: 10px;
-	 }
-		</style>
+<link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+<title>Insert title here</title>
 </head>
 <body>
-<form action="login" method="get">
-<% if(session.getAttribute("loginError") != null) {%>
-<h2><%= session.getAttribute("loginError") %></h2> 
-<% session.removeAttribute("loginError"); %>
-<%} %> 
-<div>
-        <label for="custName">Customer Name</label> 
-        <input type="text"  name="custName" id="custName"/>
-</div>
-        
-        <div>
-        <label for="pass">Password</label>
-         <input type="password" id="pass" name="pass"/>
+	 <div class="login-box">
+      <h1 style="color:white;">Login</h1>
+      <form action="../login" method="post" class="login">
+      <% if(session.getAttribute("loginError") != null) { %>
+			<h2 style="color:white;"><%= session.getAttribute("loginError")%></h2>
+			<% session.removeAttribute("loginError");
+			}
+		%>
+        <label>Email</label>
+        <input type="email" placeholder="" name="email"/>
+        <label>Password</label>
+        <input type="password" placeholder="" name="password"/>
+        <div class="btn">
+          <button type="submit">Login</button>
         </div>
-		<div>
-        <button type="submit">Login</button>
-        </div>
-</form>
+      </form>
+    </div>
+    <p class="para-2">
+      Not have an account? <a href="signup.jsp">Sign Up Here</a>
+    </p>
 </body>
 </html>

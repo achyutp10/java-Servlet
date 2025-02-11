@@ -1,35 +1,56 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
-import Model.CustomerDB;
+import models.AESEncryption;
+import models.ClothesDAO;
+import models.Customer;
+
+@SuppressWarnings("serial")
 @WebServlet("/registration")
-
-public class Signup extends HttpServlet{
-
-	private static final long serialVersionUID = 1L;
-
-	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+@MultipartConfig
+public class Signup extends HttpServlet {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
+		String id = request.getParameter("id");
 		String name = request.getParameter("custName");
+		String gender = request.getParameter("gender");
+		String address = request.getParameter("address");
+		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String password = request.getParameter("pass");
+		String encryptedPassword = AESEncryption.encrypt(password);
+		String relativePath = "customerImage/"+id+".png";
+		String role = "normal";
 		
-		System.out.println(name+email+password);
+		Customer customer = new Customer(id, name, gender, address, phone, email, encryptedPassword, relativePath, role);
 		
-		CustomerDB cdb = new CustomerDB();
-		String message = cdb.signup(name, email, password);
+		ClothesDAO sdao = new ClothesDAO();
+		String message = sdao.registerUser(customer);
 		
-		PrintWriter out = response.getWriter();
-		out.println("<h1>"+message+"</h1");
 		
-		response.setContentType("text/html");
-	}
 
+		HttpSession session = request.getSession();
+		session.setAttribute("RegisterMessage", message);
+		
+		
+		if(message.equals("Successfully Added")) {
+			Part image = request.getPart("profile");
+			String imagePath = getServletContext().getInitParameter("imagePath");
+			String fullPath = imagePath+relativePath;
+			image.write(fullPath);
+		}
+		
+		response.sendRedirect("view/login.jsp");
+		
+	}
 }
